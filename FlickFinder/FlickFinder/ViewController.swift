@@ -24,11 +24,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var phraseTextField: UITextField!
     @IBOutlet weak var latitudeTextField: UITextField!
     @IBOutlet weak var longitudeTextField: UITextField!
-    
-    
-    /* ============================================================
-    * 1 - Functional stubs for handling UI problems
-    * ============================================================ */
+
     var tapRecognizer: UITapGestureRecognizer? = nil
     
     @IBAction func searchPhotosByPhraseButtonTouchUp(sender: AnyObject) {
