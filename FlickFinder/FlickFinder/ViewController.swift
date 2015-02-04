@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         let methodArguments = [
             "method": METHOD_NAME,
             "api_key": API_KEY,
-            "text": "baby asian elephant",
+            "text": self.phraseTextField.text,
             "safe_search": SAFE_SEARCH,
             "extras": EXTRAS,
             "format": DATA_FORMAT,
@@ -47,58 +47,73 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println("Initialize the tapRecognizer in viewDidLoad")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer?.numberOfTapsRequired = 1
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        println("Add the tapRecognizer and subscribe to keyboard notifications in viewWillAppear")
+        /* Add tap recognizer to dismiss keyboard */
+        self.addKeyboardDismissRecognizer()
+        
+        /* Subscribe to keyboard events so we can adjust the view to show hidden controls */
+        self.subscribeToKeyboardNotifications()
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        println("Remove the tapRecognizer and unsubscribe from keyboard notifications in viewWillDisappear")
+        /* Remove tap recognizer */
+        self.removeKeyboardDismissRecognizer()
+        
+        /* Unsubscribe to all keyboard events */
+        self.unsubscribeToKeyboardNotifications()
     }
     
     /* ============================================================
-     * Functional stubs for handling UI problems
+     * Functions for handling UI problems
      * ============================================================ */
     
-    /* 1 - Dismissing the keyboard */
     func addKeyboardDismissRecognizer() {
-        println("Add the recognizer to dismiss the keyboard")
+        self.view.addGestureRecognizer(tapRecognizer!)
     }
     
     func removeKeyboardDismissRecognizer() {
-        println("Remove the recognizer to dismiss the keyboard")
+        self.view.removeGestureRecognizer(tapRecognizer!)
     }
 
     func handleSingleTap(recognizer: UITapGestureRecognizer) {
-        println("End editing here")
+        self.view.endEditing(true)
     }
     
-    /* 2 - Shifting the keyboard so it does not hide controls */
     func subscribeToKeyboardNotifications() {
-        println("Subscribe to the KeyboardWillShow and KeyboardWillHide notifications")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func unsubscribeToKeyboardNotifications() {
-        println("Unsubscribe to the KeyboardWillShow and KeyboardWillHide notifications")
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        println("Shift the view's frame up so that controls are shown")
+        if self.photoImageView.image != nil {
+            self.defaultLabel.alpha = 0.0
+        }
+        self.view.frame.origin.y -= self.getKeyboardHeight(notification)
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        println("Shift the view's frame down so that the view is back to its original placement")
+        if self.photoImageView.image != nil {
+            self.defaultLabel.alpha = 1.0
+        }
+        self.view.frame.origin.y += self.getKeyboardHeight(notification)
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        println("Get and return the keyboard's height from the notification")
-        return 0.0
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
     }
     
     /* ============================================================ */
