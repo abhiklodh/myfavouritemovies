@@ -26,7 +26,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var longitudeTextField: UITextField!
 
     @IBAction func searchPhotosByPhraseButtonTouchUp(sender: AnyObject) {
-        /* 1 - Hardcode the arguments */
         let methodArguments = [
             "method": METHOD_NAME,
             "api_key": API_KEY,
@@ -36,7 +35,6 @@ class ViewController: UIViewController {
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK
         ]
-        /* 2 - Call the Flickr API with these arguments */
         getImageFromFlickrBySearch(methodArguments)
     }
     
@@ -58,26 +56,62 @@ class ViewController: UIViewController {
 
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
         
-        /* 3 - Get the shared NSURLSession to faciliate network activity */
         let session = NSURLSession.sharedSession()
-        
-        /* 4 - Create the NSURLRequest using properly escaped URL */
         let urlString = BASE_URL + escapedParameters(methodArguments)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         
-        /* 5 - Create NSURLSessionDataTask and completion handler */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             if let error = downloadError? {
                 println("Could not complete the request \(error)")
             } else {
                 var parsingError: NSError? = nil
                 let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
-                println(parsedResult.valueForKey("photos"))
+                
+                /* 1 - Get the photos dictionary */
+                if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
+                    
+                    /* 2 - Determine the total number of photos */
+                    var totalPhotosVal = 0
+                    if let totalPhotos = photosDictionary["total"] as? String {
+                        totalPhotosVal = (totalPhotos as NSString).integerValue
+                    }
+                    
+                    /* 3 - If photos are returned, let's grab one! */
+                    if totalPhotosVal > 0 {
+                        if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {
+
+                            /* 4 - Get a random index, and pick a random photo's dictionary */
+                            let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
+                            let photoDictionary = photosArray[randomPhotoIndex] as [String: AnyObject]
+
+                            /* 5 - Prepare the UI updates */
+                            let photoTitle = photoDictionary["title"] as? String
+                            let imageUrlString = photoDictionary["url_m"] as? String
+                            let imageURL = NSURL(string: imageUrlString!)
+                            
+                            /* 6 - Update the UI on the main thread */
+                            if let imageData = NSData(contentsOfURL: imageURL!) {
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    println("Success, update the UI here...")
+                                })
+                            } else {
+                                println("Image does not exist at \(imageURL)")
+                            }
+                        } else {
+                            println("Cant find key 'photo' in \(photosDictionary)")
+                        }
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            println("Failure, update the UI here...")
+                        })
+                    }
+                } else {
+                    println("Cant find key 'photos' in \(parsedResult)")
+                }
             }
         }
         
-        /* 6 - Resume (execute) the task */
         task.resume()
     }
     
