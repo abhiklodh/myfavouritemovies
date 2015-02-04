@@ -10,7 +10,7 @@ import UIKit
 
 let BASE_URL = "https://api.flickr.com/services/rest/"
 let METHOD_NAME = "flickr.photos.search"
-let API_KEY = "ENTER_YOUR_API_KEY_HERE"
+let API_KEY = "ce190e05b11ca689a9c1fac8c9de619d"
 let EXTRAS = "url_m"
 let SAFE_SEARCH = "1"
 let DATA_FORMAT = "json"
@@ -136,6 +136,14 @@ class ViewController: UIViewController {
         return "\(longitude - BOUNDING_BOX_HALF_WIDTH),\(latitude - BOUNDING_BOX_HALF_HEIGHT),\(longitude + BOUNDING_BOX_HALF_WIDTH),\(latitude + BOUNDING_BOX_HALF_HEIGHT)"
     }
     
+    func getLatLonString() -> String {
+        let latitude = (self.latitudeTextField.text as NSString).doubleValue
+        let longitude = (self.longitudeTextField.text as NSString).doubleValue
+        
+        return "(\(latitude), \(longitude))"
+    }
+    
+    /* Function makes first request to get a random page, then it makes a request to get an image with the random page */
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
         
         let session = NSURLSession.sharedSession()
@@ -143,6 +151,46 @@ class ViewController: UIViewController {
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         
+        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+            if let error = downloadError? {
+                println("Could not complete the request \(error)")
+            } else {
+                
+                var parsingError: NSError? = nil
+                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
+                
+                if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
+                    
+                    /* 1 - Get random page, then make new request */
+                    if let totalPages = photosDictionary["pages"] as? Int {
+                        
+                        /* Flickr API - will only return up the 4000 images (100 per page * 40 page max) */
+                        let pageLimit = min(totalPages, 40)
+                        let randomPage = Int(arc4random_uniform(UInt32(pageLimit) + 1))
+                        self.getImageFromFlickrBySearchWithPage(methodArguments, pageNumber: randomPage)
+                        
+                    } else {
+                        println("Cant find key 'pages' in \(photosDictionary)")
+                    }
+                }
+            }
+        }
+        
+        task.resume()
+    }
+
+    func getImageFromFlickrBySearchWithPage(methodArguments: [String : AnyObject], pageNumber: Int) {
+        
+        /* 2 - Add the page to the method's arguments */
+        var withPageDictionary = methodArguments
+        withPageDictionary["page"] = pageNumber
+        
+        let session = NSURLSession.sharedSession()
+        let urlString = BASE_URL + escapedParameters(withPageDictionary)
+        let url = NSURL(string: urlString)!
+        let request = NSURLRequest(URL: url)
+        
+        /* 3 - Same request as before */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             if let error = downloadError? {
                 println("Could not complete the request \(error)")
@@ -159,10 +207,10 @@ class ViewController: UIViewController {
                     
                     if totalPhotosVal > 0 {
                         if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {
-
+                            
                             let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
                             let photoDictionary = photosArray[randomPhotoIndex] as [String: AnyObject]
-
+                            
                             let photoTitle = photoDictionary["title"] as? String
                             let imageUrlString = photoDictionary["url_m"] as? String
                             let imageURL = NSURL(string: imageUrlString!)
@@ -171,7 +219,13 @@ class ViewController: UIViewController {
                                 dispatch_async(dispatch_get_main_queue(), {
                                     self.defaultLabel.alpha = 0.0
                                     self.photoImageView.image = UIImage(data: imageData)
-                                    self.photoTitleLabel.text = "\(photoTitle!)"
+                                    
+                                    if methodArguments["bbox"] != nil {
+                                        self.photoTitleLabel.text = "\(self.getLatLonString()) \(photoTitle!)"
+                                    } else {
+                                        self.photoTitleLabel.text = "\(photoTitle!)"
+                                    }
+                                    
                                 })
                             } else {
                                 println("Image does not exist at \(imageURL)")
