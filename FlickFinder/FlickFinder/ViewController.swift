@@ -72,8 +72,8 @@ class ViewController: UIViewController {
                 println("Could not complete the request \(error)")
             } else {
                 var parsingError: NSError? = nil
-                let parsedResult: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError)
-                println(parsedResult)
+                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
+                println(parsedResult.valueForKey("photos"))
             }
         }
         
