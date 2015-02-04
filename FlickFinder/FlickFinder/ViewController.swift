@@ -24,7 +24,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var phraseTextField: UITextField!
     @IBOutlet weak var latitudeTextField: UITextField!
     @IBOutlet weak var longitudeTextField: UITextField!
-
+    
+    
+    /* ============================================================
+    * 1 - Functional stubs for handling UI problems
+    * ============================================================ */
+    var tapRecognizer: UITapGestureRecognizer? = nil
+    
     @IBAction func searchPhotosByPhraseButtonTouchUp(sender: AnyObject) {
         let methodArguments = [
             "method": METHOD_NAME,
@@ -44,16 +50,63 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        println("Initialize the tapRecognizer in viewDidLoad")
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        println("Add the tapRecognizer and subscribe to keyboard notifications in viewWillAppear")
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        println("Remove the tapRecognizer and unsubscribe from keyboard notifications in viewWillDisappear")
+    }
+    
+    /* ============================================================
+     * Functional stubs for handling UI problems
+     * ============================================================ */
+    
+    /* 1 - Dismissing the keyboard */
+    func addKeyboardDismissRecognizer() {
+        println("Add the recognizer to dismiss the keyboard")
+    }
+    
+    func removeKeyboardDismissRecognizer() {
+        println("Remove the recognizer to dismiss the keyboard")
     }
 
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        println("End editing here")
+    }
+    
+    /* 2 - Shifting the keyboard so it does not hide controls */
+    func subscribeToKeyboardNotifications() {
+        println("Subscribe to the KeyboardWillShow and KeyboardWillHide notifications")
+    }
+    
+    func unsubscribeToKeyboardNotifications() {
+        println("Unsubscribe to the KeyboardWillShow and KeyboardWillHide notifications")
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        println("Shift the view's frame up so that controls are shown")
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        println("Shift the view's frame down so that the view is back to its original placement")
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        println("Get and return the keyboard's height from the notification")
+        return 0.0
+    }
+    
+    /* ============================================================ */
+    
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
         
         let session = NSURLSession.sharedSession()
@@ -68,32 +121,28 @@ class ViewController: UIViewController {
                 var parsingError: NSError? = nil
                 let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
                 
-                /* 1 - Get the photos dictionary */
                 if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
                     
-                    /* 2 - Determine the total number of photos */
                     var totalPhotosVal = 0
                     if let totalPhotos = photosDictionary["total"] as? String {
                         totalPhotosVal = (totalPhotos as NSString).integerValue
                     }
                     
-                    /* 3 - If photos are returned, let's grab one! */
                     if totalPhotosVal > 0 {
                         if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {
 
-                            /* 4 - Get a random index, and pick a random photo's dictionary */
                             let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
                             let photoDictionary = photosArray[randomPhotoIndex] as [String: AnyObject]
 
-                            /* 5 - Prepare the UI updates */
                             let photoTitle = photoDictionary["title"] as? String
                             let imageUrlString = photoDictionary["url_m"] as? String
                             let imageURL = NSURL(string: imageUrlString!)
                             
-                            /* 6 - Update the UI on the main thread */
                             if let imageData = NSData(contentsOfURL: imageURL!) {
                                 dispatch_async(dispatch_get_main_queue(), {
-                                    println("Success, update the UI here...")
+                                    self.defaultLabel.alpha = 0.0
+                                    self.photoImageView.image = UIImage(data: imageData)
+                                    self.photoTitleLabel.text = "\(photoTitle!)"
                                 })
                             } else {
                                 println("Image does not exist at \(imageURL)")
@@ -103,7 +152,9 @@ class ViewController: UIViewController {
                         }
                     } else {
                         dispatch_async(dispatch_get_main_queue(), {
-                            println("Failure, update the UI here...")
+                            self.photoTitleLabel.text = "No Photos Found. Search Again."
+                            self.defaultLabel.alpha = 1.0
+                            self.photoImageView.image = nil
                         })
                     }
                 } else {
