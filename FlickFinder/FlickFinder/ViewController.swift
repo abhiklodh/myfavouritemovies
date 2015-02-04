@@ -15,6 +15,8 @@ let EXTRAS = "url_m"
 let SAFE_SEARCH = "1"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
+let BOUNDING_BOX_HALF_WIDTH = 1.0
+let BOUNDING_BOX_HALF_HEIGHT = 1.0
 
 class ViewController: UIViewController {
 
@@ -41,7 +43,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func searchPhotosByLatLonButtonTouchUp(sender: AnyObject) {
-        println("Will implement this function in a later step...")
+        let methodArguments = [
+            "method": METHOD_NAME,
+            "api_key": API_KEY,
+            "bbox": createBoundingBoxString(),
+            "safe_search": SAFE_SEARCH,
+            "extras": EXTRAS,
+            "format": DATA_FORMAT,
+            "nojsoncallback": NO_JSON_CALLBACK
+        ]
+        getImageFromFlickrBySearch(methodArguments)
     }
     
     override func viewDidLoad() {
@@ -117,6 +128,13 @@ class ViewController: UIViewController {
     }
     
     /* ============================================================ */
+    
+    func createBoundingBoxString() -> String {
+        let latitude = (self.latitudeTextField.text as NSString).doubleValue
+        let longitude = (self.longitudeTextField.text as NSString).doubleValue
+        
+        return "\(longitude - BOUNDING_BOX_HALF_WIDTH),\(latitude - BOUNDING_BOX_HALF_HEIGHT),\(longitude + BOUNDING_BOX_HALF_WIDTH),\(latitude + BOUNDING_BOX_HALF_HEIGHT)"
+    }
     
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
         
