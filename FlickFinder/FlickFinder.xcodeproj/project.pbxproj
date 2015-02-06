@@ -10,6 +10,15 @@
 		A91B117A1A7C211500E60719 /* search-icon-32.png in Resources */ = {isa = PBXBuildFile; fileRef = A91B11761A7C211500E60719 /* search-icon-32.png */; };
 		A91B117B1A7C211500E60719 /* search-icon-48.png in Resources */ = {isa = PBXBuildFile; fileRef = A91B11771A7C211500E60719 /* search-icon-48.png */; };
 		A91B117C1A7C211500E60719 /* search-icon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = A91B11781A7C211500E60719 /* search-icon-128.png */; };
+		A93E723A1A8547B10052F767 /* u_76.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E72361A8547B10052F767 /* u_76.png */; };
+		A93E723B1A8547B10052F767 /* u_120.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E72371A8547B10052F767 /* u_120.png */; };
+		A93E723C1A8547B10052F767 /* u_152.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E72381A8547B10052F767 /* u_152.png */; };
+		A93E723D1A8547B10052F767 /* u_180.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E72391A8547B10052F767 /* u_180.png */; };
+		A93E72401A85487E0052F767 /* u_58.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E723E1A85487E0052F767 /* u_58.png */; };
+		A93E72411A85487E0052F767 /* u_87.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E723F1A85487E0052F767 /* u_87.png */; };
+		A93E72431A8548BA0052F767 /* u_80.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E72421A8548BA0052F767 /* u_80.png */; };
+		A93E72461A8549220052F767 /* u_29.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E72441A8549220052F767 /* u_29.png */; };
+		A93E72471A8549220052F767 /* u_40.png in Resources */ = {isa = PBXBuildFile; fileRef = A93E72451A8549220052F767 /* u_40.png */; };
 		A9AF559E1A7B0B4000763272 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AF559D1A7B0B4000763272 /* AppDelegate.swift */; };
 		A9AF55A01A7B0B4000763272 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AF559F1A7B0B4000763272 /* ViewController.swift */; };
 		A9AF55A31A7B0B4000763272 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9AF55A11A7B0B4000763272 /* Main.storyboard */; };
@@ -32,6 +41,15 @@
 		A91B11761A7C211500E60719 /* search-icon-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon-32.png"; sourceTree = "<group>"; };
 		A91B11771A7C211500E60719 /* search-icon-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon-48.png"; sourceTree = "<group>"; };
 		A91B11781A7C211500E60719 /* search-icon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon-128.png"; sourceTree = "<group>"; };
+		A93E72361A8547B10052F767 /* u_76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_76.png; sourceTree = "<group>"; };
+		A93E72371A8547B10052F767 /* u_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_120.png; sourceTree = "<group>"; };
+		A93E72381A8547B10052F767 /* u_152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_152.png; sourceTree = "<group>"; };
+		A93E72391A8547B10052F767 /* u_180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_180.png; sourceTree = "<group>"; };
+		A93E723E1A85487E0052F767 /* u_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_58.png; sourceTree = "<group>"; };
+		A93E723F1A85487E0052F767 /* u_87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_87.png; sourceTree = "<group>"; };
+		A93E72421A8548BA0052F767 /* u_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_80.png; sourceTree = "<group>"; };
+		A93E72441A8549220052F767 /* u_29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_29.png; sourceTree = "<group>"; };
+		A93E72451A8549220052F767 /* u_40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = u_40.png; sourceTree = "<group>"; };
 		A9AF55981A7B0B4000763272 /* FlickFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9AF559C1A7B0B4000763272 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9AF559D1A7B0B4000763272 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +83,15 @@
 		A91B116E1A7BFC1100E60719 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A93E72441A8549220052F767 /* u_29.png */,
+				A93E72451A8549220052F767 /* u_40.png */,
+				A93E723E1A85487E0052F767 /* u_58.png */,
+				A93E72361A8547B10052F767 /* u_76.png */,
+				A93E72421A8548BA0052F767 /* u_80.png */,
+				A93E723F1A85487E0052F767 /* u_87.png */,
+				A93E72371A8547B10052F767 /* u_120.png */,
+				A93E72381A8547B10052F767 /* u_152.png */,
+				A93E72391A8547B10052F767 /* u_180.png */,
 				A91B11761A7C211500E60719 /* search-icon-32.png */,
 				A91B11771A7C211500E60719 /* search-icon-48.png */,
 				A91B11781A7C211500E60719 /* search-icon-128.png */,
@@ -178,6 +205,7 @@
 				TargetAttributes = {
 					A9AF55971A7B0B4000763272 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = B992YYX7QS;
 					};
 					A9AF55AC1A7B0B4000763272 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -210,9 +238,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				A91B117B1A7C211500E60719 /* search-icon-48.png in Resources */,
+				A93E723A1A8547B10052F767 /* u_76.png in Resources */,
+				A93E72431A8548BA0052F767 /* u_80.png in Resources */,
+				A93E72411A85487E0052F767 /* u_87.png in Resources */,
+				A93E72461A8549220052F767 /* u_29.png in Resources */,
 				A9AF55A31A7B0B4000763272 /* Main.storyboard in Resources */,
+				A93E723B1A8547B10052F767 /* u_120.png in Resources */,
 				A9AF55A81A7B0B4000763272 /* LaunchScreen.xib in Resources */,
 				A91B117A1A7C211500E60719 /* search-icon-32.png in Resources */,
+				A93E72401A85487E0052F767 /* u_58.png in Resources */,
+				A93E723C1A8547B10052F767 /* u_152.png in Resources */,
+				A93E72471A8549220052F767 /* u_40.png in Resources */,
+				A93E723D1A8547B10052F767 /* u_180.png in Resources */,
 				A91B117C1A7C211500E60719 /* search-icon-128.png in Resources */,
 				A9AF55A51A7B0B4000763272 /* Images.xcassets in Resources */,
 			);
@@ -358,9 +395,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlickFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -368,9 +408,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlickFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
