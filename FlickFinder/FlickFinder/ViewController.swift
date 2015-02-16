@@ -10,7 +10,7 @@ import UIKit
 
 let BASE_URL = "https://api.flickr.com/services/rest/"
 let METHOD_NAME = "flickr.photos.search"
-let API_KEY = "ce190e05b11ca689a9c1fac8c9de619d"
+let API_KEY = "ENTER_YOUR_API_KEY_HERE"
 let EXTRAS = "url_m"
 let SAFE_SEARCH = "1"
 let DATA_FORMAT = "json"
