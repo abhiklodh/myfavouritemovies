@@ -106,7 +106,7 @@ class Config: NSObject, NSCoding {
         ]
         
         /* 2. Build the URL */
-        let urlString = appDelegate.baseURLString + "configuration" + appDelegate.escapedParameters(methodParameters)
+        let urlString = appDelegate.baseURLSecureString + "configuration" + appDelegate.escapedParameters(methodParameters)
         let url = NSURL(string: urlString)!
         
         /* 3. Configure the request */

@@ -43,7 +43,7 @@ class FavoritesTableViewController: UITableViewController {
         ]
         
         /* 2. Build the URL */
-        let urlString = appDelegate.baseURLString + "account/\(appDelegate.userID!)/favorite/movies" + appDelegate.escapedParameters(methodParameters)
+        let urlString = appDelegate.baseURLSecureString + "account/\(appDelegate.userID!)/favorite/movies" + appDelegate.escapedParameters(methodParameters)
         let url = NSURL(string: urlString)!
         
         /* 3. Configure the request */
