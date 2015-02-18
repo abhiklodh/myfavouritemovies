@@ -240,7 +240,7 @@ class LoginViewController: UIViewController {
                 /* 6. Use the data! */
                 if let sessionID = parsedResult["session_id"] as? String {
                     self.appDelegate.sessionID = sessionID
-                    println("getSessionID: \(sessionID)")
+                    self.getUserID(self.appDelegate.sessionID!)
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.debugTextLabel.text = "Login Failed (Session ID)."
@@ -255,6 +255,8 @@ class LoginViewController: UIViewController {
     }
     
     func getUserID(session_id : String) {
+        
+        println("getUserID: implement me!")
         
         /* TASK: Get the user's ID, then store it (appDelegate.userID) for future use and go to next view! */
         /* 1. Set the parameters */
