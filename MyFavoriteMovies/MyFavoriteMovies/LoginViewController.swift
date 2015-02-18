@@ -135,7 +135,7 @@ class LoginViewController: UIViewController {
                 /* 6. Use the data! */
                 if let requestToken = parsedResult["request_token"] as? String {
                     self.appDelegate.requestToken = requestToken
-                    println("gotRequestToken: \(requestToken)")
+                    self.loginWithToken(self.appDelegate.requestToken!)
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.debugTextLabel.text = "Login Failed (Request Token)."
@@ -151,6 +151,8 @@ class LoginViewController: UIViewController {
     
     func loginWithToken(requestToken: String) {
         
+        println("loginWithToken: implement me!")
+        
         /* TASK: Login, then get a session id */
         /* 1. Set the parameters */
         /* 2. Build the URL */
@@ -162,6 +164,9 @@ class LoginViewController: UIViewController {
     }
     
     func getSessionID(requestToken: String) {
+        
+        
+        println("getSessionID: implement me!")
         
         /* TASK: Get a session ID, then store it (appDelegate.sessionID) and get the user's id */
         /* 1. Set the parameters */
