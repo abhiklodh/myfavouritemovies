@@ -46,7 +46,7 @@ class GenreTableViewController: UITableViewController {
         ]
         
         /* 2. Build the URL */        
-        let urlString = appDelegate.baseURLSecureString + "genre/\(genreID!)/movies" + appDelegate.escapedParameters(methodParameters)
+        let urlString = appDelegate.baseURLString + "genre/\(genreID!)/movies" + appDelegate.escapedParameters(methodParameters)
         let url = NSURL(string: urlString)!
         
         /* 3. Configure the request */        

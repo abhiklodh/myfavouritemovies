@@ -111,7 +111,7 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2. Build the URL */
-        let urlString = appDelegate.baseURLSecureString + "authentication/token/new" + appDelegate.escapedParameters(methodParameters)
+        let urlString = appDelegate.baseURLString + "authentication/token/new" + appDelegate.escapedParameters(methodParameters)
         let url = NSURL(string: urlString)!
         
         /* 3. Configure the request */
@@ -162,7 +162,7 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2. Build the URL */
-        let urlString = appDelegate.baseURLSecureString + "authentication/token/validate_with_login" + appDelegate.escapedParameters(methodParameters)
+        let urlString = appDelegate.baseURLString + "authentication/token/validate_with_login" + appDelegate.escapedParameters(methodParameters)
         let url = NSURL(string: urlString)!
         
         /* 3. Configure the request */
@@ -186,7 +186,7 @@ class LoginViewController: UIViewController {
                 /* 6. Use the data! */
                 if let success = parsedResult["success"] as? Bool {
                     if success {
-                        println("Login complete!")
+                        self.getSessionID(self.appDelegate.requestToken!)
                     }
                 } else {
                     if let status_code = parsedResult["status_code"] as? Int {
@@ -208,7 +208,6 @@ class LoginViewController: UIViewController {
     }
     
     func getSessionID(requestToken: String) {
-        
         
         println("getSessionID: implement me!")
         
