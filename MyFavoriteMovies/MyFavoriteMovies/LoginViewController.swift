@@ -239,6 +239,7 @@ class LoginViewController: UIViewController {
                 
                 /* 6. Use the data! */
                 if let sessionID = parsedResult["session_id"] as? String {
+                    self.appDelegate.sessionID = sessionID
                     println("getSessionID: \(sessionID)")
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
