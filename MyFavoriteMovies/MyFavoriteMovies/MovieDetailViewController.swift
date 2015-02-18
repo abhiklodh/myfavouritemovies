@@ -37,6 +37,8 @@ class MovieDetailViewController: UIViewController {
         
         super.viewWillAppear(animated)
         
+        println("viewWillAppear (MovieDetailViewController): implement me!")
+        
         /* TASK A: Get favorite movies, then update the favorite buttons */
         /* 1A. Set the parameters */
         /* 2A. Build the URL */
