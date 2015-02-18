@@ -111,7 +111,7 @@ class LoginViewController: UIViewController {
         ]
         
         /* 2. Build the URL */
-        let urlString = appDelegate.baseURLSecureString + "authentication/token/new" + appDelegate.escapedParameters(methodParameters)
+        let urlString = appDelegate.baseURLString + "authentication/token/new" + appDelegate.escapedParameters(methodParameters)
         let url = NSURL(string: urlString)!
         
         /* 3. Configure the request */
