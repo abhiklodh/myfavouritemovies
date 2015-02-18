@@ -107,11 +107,11 @@ class LoginViewController: UIViewController {
         
         /* 1. Set the parameters */
         let methodParameters = [
-            "key": "value"
+            "api_key": appDelegate.apiKey
         ]
         
         /* 2. Build the URL */
-        let urlString = "BUILD_THE_URL" + appDelegate.escapedParameters(methodParameters)
+        let urlString = appDelegate.baseURLSecureString + "authentication/token/new" + appDelegate.escapedParameters(methodParameters)
         let url = NSURL(string: urlString)!
         
         /* 3. Configure the request */
@@ -122,15 +122,26 @@ class LoginViewController: UIViewController {
         let task = session.dataTaskWithRequest(request) { data, response, downloadError in
             
             if let error = downloadError? {
-                println("getRequestToken: Print an error message")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.debugTextLabel.text = "Login Failed (Request Token)."
+                }
+                println("Could not complete the request \(error)")
             } else {
                 
                 /* 5. Parse the data */
-                println("getRequestToken: Parse the data")
+                var parsingError: NSError? = nil
+                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
                 
                 /* 6. Use the data! */
-                println("getRequestToken: Use the data")
-
+                if let requestToken = parsedResult["request_token"] as? String {
+                    self.appDelegate.requestToken = requestToken
+                    println("gotRequestToken: \(requestToken)")
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.debugTextLabel.text = "Login Failed (Request Token)."
+                    }
+                    println("Could not find request_token in \(parsedResult)")
+                }
             }
         }
         
