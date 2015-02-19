@@ -37,7 +37,6 @@ class MovieDetailViewController: UIViewController {
         
         super.viewWillAppear(animated)
         
-        /* TASK A: Get favorite movies, then update the favorite buttons */
         if let movie = movie? {
             
             /* Setting some defaults ... */
@@ -45,6 +44,8 @@ class MovieDetailViewController: UIViewController {
             titleLabel.text = movie.title
             unFavoriteButton.hidden = true
             
+            /* TASK A: Get favorite movies, then update the favorite buttons */
+
             /* 1A. Set the parameters */
             let methodParameters = [
                 "api_key": appDelegate.apiKey,
