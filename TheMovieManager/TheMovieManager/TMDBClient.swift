@@ -1,10 +1,10 @@
-////
-////  TMDBClient.swift
-////  TheMovieManager
-////
-////  Created by Jarrod Parkes on 2/11/15.
-////  Copyright (c) 2015 Jarrod Parkes. All rights reserved.
-////
+//
+//  TMDBClient.swift
+//  TheMovieManager
+//
+//  Created by Jarrod Parkes on 2/11/15.
+//  Copyright (c) 2015 Jarrod Parkes. All rights reserved.
+//
 
 import Foundation
 
