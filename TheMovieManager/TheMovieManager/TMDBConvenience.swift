@@ -39,10 +39,22 @@ extension TMDBClient {
     func getRequestToken(completionHandler: (success: Bool, requestToken: String?, errorString: String?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
-        /* 2. Make the request */
-        /* 3. Send the desired value(s) to completion handler */
-        println("implement me: TMDBClient getRequestToken")
+        var parameters = [String: AnyObject]()
         
+        /* 2. Make the request */
+        taskForGETMethod(Methods.AuthenticationTokenNew, parameters: parameters) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error? {
+                completionHandler(success: false, requestToken: nil, errorString: "Login Failed (Request Token).")
+            } else {
+                if let requestToken = JSONResult.valueForKey(TMDBClient.JSONResponseKeys.RequestToken) as? String {
+                    completionHandler(success: true, requestToken: requestToken, errorString: nil)
+                } else {
+                    completionHandler(success: false, requestToken: nil, errorString: "Login Failed (Request Token).")
+                }
+            }
+        }
     }
     
     // TODO: Make the following methods into convenience functions!
