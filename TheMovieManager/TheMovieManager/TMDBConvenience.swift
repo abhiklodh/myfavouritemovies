@@ -110,17 +110,43 @@ extension TMDBClient {
     func getSessionID(requestToken: String?, completionHandler: (success: Bool, sessionID: String?, errorString: String?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        var parameters = [TMDBClient.ParameterKeys.RequestToken : requestToken!]
+        
         /* 2. Make the request */
-        /* 3. Send the desired value(s) to completion handler */
-        println("implement me: TMDBClient getSessionID")
+        taskForGETMethod(Methods.AuthenticationSessionNew, parameters: parameters) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error? {
+                completionHandler(success: false, sessionID: nil, errorString: "Login Failed (Session ID).")
+            } else {
+                if let sessionID = JSONResult.valueForKey(TMDBClient.JSONResponseKeys.SessionID) as? String {
+                    completionHandler(success: true, sessionID: sessionID, errorString: nil)
+                } else {
+                    completionHandler(success: false, sessionID: nil, errorString: "Login Failed (Session ID).")
+                }
+            }
+        }
     }
     
     func getUserID(completionHandler: (success: Bool, userID: Int?, errorString: String?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        var parameters = [TMDBClient.ParameterKeys.SessionID : TMDBClient.sharedInstance().sessionID!]
+        
         /* 2. Make the request */
-        /* 3. Send the desired value(s) to completion handler */
-        println("implement me: TMDBClient getUserID")
+        taskForGETMethod(Methods.Account, parameters: parameters) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error? {
+                completionHandler(success: false, userID: nil, errorString: "Login Failed (User ID).")
+            } else {
+                if let userID = JSONResult.valueForKey(TMDBClient.JSONResponseKeys.UserID) as? Int {
+                    completionHandler(success: true, userID: userID, errorString: nil)
+                } else {
+                    completionHandler(success: false, userID: nil, errorString: "Login Failed (User ID).")
+                }
+            }
+        }
     }
         
 //    func getSessionID(requestToken: String) {
