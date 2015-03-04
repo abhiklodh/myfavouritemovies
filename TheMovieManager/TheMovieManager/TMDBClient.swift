@@ -56,6 +56,35 @@ class TMDBClient : NSObject {
         return task
     }
     
+    func taskForGETImage(size: String, filePath: String, completionHandler: (imageData: NSData?, error: NSError?) ->  Void) -> NSURLSessionTask {
+        
+        /* 1. Set the parameters */
+        // There are none...
+        
+        /* 2/3. Build the URL and configure the request */
+        let urlComponents = [size, filePath]
+        let baseURL = NSURL(string: config.baseImageURLString)!
+        let url = baseURL.URLByAppendingPathComponent(size).URLByAppendingPathComponent(filePath)
+        let request = NSURLRequest(URL: url)
+        
+        /* 4. Make the request */
+        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+            
+            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            if let error = downloadError? {
+                let newError = TMDBClient.errorForData(data, response: response, error: downloadError)
+                completionHandler(imageData: nil, error: newError)
+            } else {
+                completionHandler(imageData: data, error: nil)
+            }
+        }
+        
+        /* 7. Start the request */
+        task.resume()
+        
+        return task
+    }
+    
     // MARK: - Helpers
     
     /* Helper: Substitute the key for the value that is contained within the method name */

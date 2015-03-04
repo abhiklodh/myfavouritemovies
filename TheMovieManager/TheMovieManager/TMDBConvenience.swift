@@ -148,102 +148,88 @@ extension TMDBClient {
             }
         }
     }
-        
-//    func getSessionID(requestToken: String) {
-//        
-//        /* 1. Set the parameters */
-//        let methodParameters = [
-//            "api_key": appDelegate.apiKey,
-//            "request_token": requestToken
-//        ]
-//        
-//        /* 2. Build the URL */
-//        let urlString = appDelegate.baseURLSecureString + "authentication/session/new" + appDelegate.escapedParameters(methodParameters)
-//        let url = NSURL(string: urlString)!
-//        
-//        /* 3. Configure the request */
-//        let request = NSMutableURLRequest(URL: url)
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        
-//        /* 4. Make the request */
-//        let task = session.dataTaskWithRequest(request) { data, response, downloadError in
-//            
-//            if let error = downloadError? {
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    self.debugTextLabel.text = "Login Failed (Session ID)."
-//                }
-//                println("Could not complete the request \(error)")
-//            } else {
-//                
-//                /* 5. Parse the data */
-//                var parsingError: NSError? = nil
-//                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
-//                
-//                /* 6. Use the data! */
-//                if let sessionID = parsedResult["session_id"] as? String {
-//                    self.appDelegate.sessionID = sessionID
-//                    self.getUserID(self.appDelegate.sessionID!)
-//                } else {
-//                    dispatch_async(dispatch_get_main_queue()) {
-//                        self.debugTextLabel.text = "Login Failed (Session ID)."
-//                    }
-//                    println("Could not find session_id in \(parsedResult)")
-//                }
-//            }
-//        }
-//        
-//        /* 7. Start the request */
-//        task.resume()
-//    }
-//    
-//    func getUserID(session_id : String) {
-//        
-//        /* TASK: Get the user's ID, then store it (appDelegate.userID) for future use and go to next view! */
-//        
-//        /* 1. Set the parameters */
-//        let methodParameters = [
-//            "api_key": appDelegate.apiKey,
-//            "session_id": session_id
-//        ]
-//        
-//        /* 2. Build the URL */
-//        let urlString = appDelegate.baseURLSecureString + "account" + appDelegate.escapedParameters(methodParameters)
-//        let url = NSURL(string: urlString)!
-//        
-//        /* 3. Configure the request */
-//        let request = NSMutableURLRequest(URL: url)
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        
-//        /* 4. Make the request */
-//        let task = session.dataTaskWithRequest(request) { data, response, downloadError in
-//            
-//            if let error = downloadError? {
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    self.debugTextLabel.text = "Login Failed (User ID)."
-//                }
-//                println("Could not complete the request \(error)")
-//            } else {
-//                
-//                /* 5. Parse the data */
-//                var parsingError: NSError? = nil
-//                let parsedResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError) as NSDictionary
-//                
-//                /* 6. Use the data! */
-//                if let userID = parsedResult["id"] as? Int {
-//                    self.appDelegate.userID = userID
-//                    self.completeLogin()
-//                    
-//                } else {
-//                    dispatch_async(dispatch_get_main_queue()) {
-//                        self.debugTextLabel.text = "Login Failed (User ID)."
-//                    }
-//                    println("Could not find id in \(parsedResult)")
-//                }
-//            }
-//        }
-//        
-//        /* 7. Start the request */
-//        task.resume()
-//    }
+
+    // MARK: - GET Convenience Methods
     
+    func getFavoriteMovies(completionHandler: (result: [TMDBMovie]?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        let parameters = [TMDBClient.ParameterKeys.SessionID: TMDBClient.sharedInstance().sessionID!]
+        var mutableMethod : String = Methods.AccountIDFavoriteMovies
+        mutableMethod = TMDBClient.subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance().userID!))!
+        
+        /* 2. Make the request */
+        taskForGETMethod(mutableMethod, parameters: parameters) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error? {
+                completionHandler(result: nil, error: error)
+            } else {
+                
+                if let results = JSONResult.valueForKey(TMDBClient.JSONResponseKeys.MovieResults) as? [[String : AnyObject]] {
+                    
+                    var movies = TMDBMovie.moviesFromResults(results)
+                    
+                    completionHandler(result: movies, error: nil)
+                } else {
+                    completionHandler(result: nil, error: NSError(domain: "getFavoriteMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]))
+                }
+            }
+        }
+    }
+    
+    func getWatchlistMovies(completionHandler: (result: [TMDBMovie]?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        /* 2. Make the request */
+        /* 3. Send the desired value(s) to completion handler */
+        println("implement me: TMDBClient getWatchlistMovies")
+    }
+    
+    func getMoviesForSearchString(searchString: String, completionHandler: (result: [TMDBMovie]?, error: NSError?) -> Void) -> NSURLSessionDataTask? {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        let parameters = [TMDBClient.ParameterKeys.Query: searchString]
+        
+        /* 2. Make the request */
+        let task = taskForGETMethod(Methods.SearchMovie, parameters: parameters) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error? {
+                completionHandler(result: nil, error: error)
+            } else {
+                
+                if let results = JSONResult.valueForKey(TMDBClient.JSONResponseKeys.MovieResults) as? [[String : AnyObject]] {
+                    
+                    var movies = TMDBMovie.moviesFromResults(results)
+                    
+                    completionHandler(result: movies, error: nil)
+                } else {
+                    completionHandler(result: nil, error: NSError(domain: "getMoviesForSearchString parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMoviesForSearchString"]))
+                }
+            }
+        }
+        
+        return task
+    }
+    
+    func getConfig(completionHandler: (didSucceed: Bool, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        var parameters = [String: AnyObject]()
+        
+        /* 2. Make the request */
+        taskForGETMethod(Methods.Config, parameters: parameters) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error? {
+                completionHandler(didSucceed: false, error: error)
+            } else if let newConfig = TMDBConfig(dictionary: JSONResult as [String : AnyObject]) {
+                self.config = newConfig
+                completionHandler(didSucceed: true, error: nil)
+            } else {
+                completionHandler(didSucceed: false, error: NSError(domain: "getConfig parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getConfig"]))
+            }
+        }
+    }
 }
