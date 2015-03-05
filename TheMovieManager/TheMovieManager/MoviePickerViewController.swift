@@ -39,7 +39,7 @@ class MoviePickerViewController: UIViewController, UITableViewDelegate, UITableV
         tapRecognizer.delegate = self
         self.view.addGestureRecognizer(tapRecognizer)
     }
-
+    
     // MARK: - Dismiss Keyboard
     
     func handleSingleTap(recognizer: UITapGestureRecognizer) {
@@ -79,7 +79,7 @@ class MoviePickerViewController: UIViewController, UITableViewDelegate, UITableV
                     self.self.movieTableView!.reloadData()
                 }
             }
-        })        
+        })
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
