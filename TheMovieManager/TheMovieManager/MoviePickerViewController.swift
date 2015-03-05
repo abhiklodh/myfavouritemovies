@@ -12,7 +12,7 @@ protocol MoviePickerViewControllerDelegate {
     func moviePicker(moviePicker: MoviePickerViewController, didPickMovie movie: TMDBMovie?)
 }
 
-class MoviePickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class MoviePickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var movieTableView: UITableView!
     @IBOutlet weak var movieSearchBar: UISearchBar!
@@ -32,11 +32,24 @@ class MoviePickerViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         self.parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logoutButtonTouchUp")
+        
+        /* Configure tap recognizer */
+        var tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer.delegate = self
+        self.view.addGestureRecognizer(tapRecognizer)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.movieSearchBar.becomeFirstResponder()
+    // MARK: - Dismiss Keyboard
+    
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    
+    // MARK: - UIGestureRecognizerDelegate
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        return self.movieSearchBar.isFirstResponder()
     }
     
     // MARK: - UISearchBarDelegate
