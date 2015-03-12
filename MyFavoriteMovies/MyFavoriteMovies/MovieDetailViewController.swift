@@ -228,7 +228,7 @@ class MovieDetailViewController: UIViewController {
                 
                 /* 6. Use the data! */
                 if let status_code = parsedResult["status_code"] as? Int {
-                    if status_code == 1 {
+                    if status_code == 12 || status_code == 1 {
                         dispatch_async(dispatch_get_main_queue()) {
                             self.unFavoriteButton.hidden = false
                             self.favoriteButton.hidden = true
