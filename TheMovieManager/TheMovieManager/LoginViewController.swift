@@ -108,7 +108,7 @@ class LoginViewController: UIViewController {
         task.resume()
     }
     
-    /* This function opens a WebAuthViewController to handle Step 2a of the auth flow */
+    /* This function opens a TMDBAuthViewController to handle Step 2a of the auth flow */
     func loginWithToken(requestToken: String?, hostViewController: UIViewController, completionHandler: (success: Bool, errorString: String?) -> Void) {
         
         let authorizationURL = NSURL(string: "\(TMDBClient.Constants.AuthorizationURL)\(requestToken!)")
