@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -47,21 +47,20 @@
                                     <constraint firstAttribute="height" constant="44" id="cuG-Ob-P31"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.54464814665577943" green="0.82052635977664901" blue="0.98823529481887817" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="EFM-DS-VTW" firstAttribute="centerX" secondItem="p2T-4P-HrT" secondAttribute="centerX" id="7pL-Xu-851"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JOW-Bj-KtY" secondAttribute="bottom" constant="90" id="9U1-jN-ni4"/>
                             <constraint firstItem="JOW-Bj-KtY" firstAttribute="top" secondItem="Qsj-bT-qk6" secondAttribute="bottom" constant="61" id="Dfm-r9-1wO"/>
-                            <constraint firstItem="EFM-DS-VTW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="82" id="IhP-h4-RGd"/>
                             <constraint firstItem="Qsj-bT-qk6" firstAttribute="leading" secondItem="p2T-4P-HrT" secondAttribute="leading" id="Mxv-cV-H1v"/>
-                            <constraint firstItem="EFM-DS-VTW" firstAttribute="centerX" secondItem="p2T-4P-HrT" secondAttribute="centerX" id="RKN-b1-sgD"/>
-                            <constraint firstItem="p2T-4P-HrT" firstAttribute="top" secondItem="EFM-DS-VTW" secondAttribute="bottom" constant="15" id="aKT-86-ADO"/>
                             <constraint firstItem="p2T-4P-HrT" firstAttribute="trailing" secondItem="Qsj-bT-qk6" secondAttribute="trailing" id="kYy-wL-bu6"/>
                             <constraint firstItem="JOW-Bj-KtY" firstAttribute="leading" secondItem="Qsj-bT-qk6" secondAttribute="leading" id="nkX-TU-k7o"/>
                             <constraint firstItem="p2T-4P-HrT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="qlT-T1-HNH"/>
+                            <constraint firstItem="p2T-4P-HrT" firstAttribute="top" secondItem="EFM-DS-VTW" secondAttribute="bottom" constant="15" id="sXb-Gp-7gy"/>
                             <constraint firstItem="p2T-4P-HrT" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="ti4-uk-Olc"/>
                             <constraint firstItem="Qsj-bT-qk6" firstAttribute="top" secondItem="p2T-4P-HrT" secondAttribute="bottom" constant="75" id="u4o-gM-d7q"/>
                             <constraint firstItem="Qsj-bT-qk6" firstAttribute="trailing" secondItem="JOW-Bj-KtY" secondAttribute="trailing" id="wmM-mU-f34"/>
@@ -96,7 +95,7 @@
         <!--Web Auth-->
         <scene sceneID="tHu-Pb-CGD">
             <objects>
-                <viewController storyboardIdentifier="WebAuthViewController" id="jwh-DV-AeZ" userLabel="Web Auth" customClass="WebAuthViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TMDBAuthViewController" id="jwh-DV-AeZ" userLabel="Web Auth" customClass="TMDBAuthViewController" customModule="TheMovieManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UZw-Z9-T03"/>
                         <viewControllerLayoutGuide type="bottom" id="kux-EN-rnt"/>
