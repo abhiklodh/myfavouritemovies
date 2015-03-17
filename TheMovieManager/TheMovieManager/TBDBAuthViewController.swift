@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WebAuthViewController: UIViewController, UIWebViewDelegate {
+class TMDBAuthViewController: UIViewController, UIWebViewDelegate {
 
     @IBOutlet weak var webView: UIWebView!
     
