@@ -59,12 +59,12 @@ extension TMDBClient {
     
     // TODO: Make the following methods into convenience functions!
     
-//    /* This function opens a WebAuthViewController to handle Step 2a of the auth flow */
+//    /* This function opens a TMDBAuthViewController to handle Step 2a of the auth flow */
 //    func loginWithToken(requestToken: String?, hostViewController: UIViewController, completionHandler: (success: Bool, errorString: String?) -> Void) {
 //        
 //        let authorizationURL = NSURL(string: "\(TMDBClient.Constants.AuthorizationURL)\(requestToken!)")
 //        let request = NSURLRequest(URL: authorizationURL!)
-//        let webAuthViewController = hostViewController.storyboard!.instantiateViewControllerWithIdentifier("WebAuthViewController") as WebAuthViewController
+//        let webAuthViewController = hostViewController.storyboard!.instantiateViewControllerWithIdentifier("TMDBAuthViewController") as TMDBAuthViewController
 //        webAuthViewController.urlRequest = request
 //        webAuthViewController.requestToken = requestToken
 //        webAuthViewController.completionHandler = completionHandler
