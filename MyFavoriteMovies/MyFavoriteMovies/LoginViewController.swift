@@ -187,6 +187,8 @@ class LoginViewController: UIViewController {
                 if let success = parsedResult["success"] as? Bool {
                     if success {
                         println("Login complete!")
+                    } else {
+                        println("Login failed. Cannot find success in \(parsedResult)")
                     }
                 } else {
                     if let status_code = parsedResult["status_code"] as? Int {
